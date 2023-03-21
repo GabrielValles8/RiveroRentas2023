@@ -1,0 +1,2 @@
+ng build
+rsync -avr dist/riverorentas/* riverorenta@gruporivero.com:~/www/beta/riverorentas/

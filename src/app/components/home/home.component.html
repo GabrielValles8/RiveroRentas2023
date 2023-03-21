@@ -1,0 +1,62 @@
+<div class="container-fluid">
+    <div class="row bg-gris banner-silverado">
+      
+        <app-home-renta class="col-12 text-white text-center p-0 col"></app-home-renta>
+       
+        
+       
+        <div class="col-12 col-lg-7 col-md-12 col-sm-12 col-xs-12 p-0">
+         
+                <div class="p-2" style="bottom: 0; position: absolute; opacity: 80%; margin-left: 0.5rem;">
+                    <table hidden>
+                        <tr>
+                            <td>
+                                <img class="mb-0" width="80px" src="assets/images/icons/icon_rendimiento.png" alt="rendimiento"/>
+                            </td>
+                            <td>
+                                <div style="color: #fff; text-align: left; font-size: 15px;">
+                                    <strong>Rendimiento</strong><br>9,9 km/L
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="text-white p-2 pr-3 mr-0" style="position: absolute; bottom: 10px; right: 0;" hidden>
+                    <span style="font-size: 28px; font-weight: 900;">Silverado</span><br>
+                    <span class="pl-2" style="font-size: 24px; font-weight: 400;">Doble cabina</span>
+                </div>
+        
+        </div>
+        
+    </div>
+   
+    <div class="row justify-content-center my-4">
+        <div class="col-12 text-center">
+            <h3>Renta de flotillas a la medida, en cualquier industria</h3>
+        </div>
+       
+        <div class="col-12 my-3" style="background-color: #f8f9fa;">
+            <div class="container">
+                <div class="row mt-3">
+                    <div class="col-12 text-center">
+                        <h4>Conoce los beneficios de rentar con nosotros</h4>
+                    </div>
+                        <ng-container *ngIf="carga">
+                            <app-icon-text-view class="col icon-text-view p-2 text-center align-content-center mb-3" [iconText]="'Transparencia'" [iconImg]="'assets/images/icons/icon_transparencia.svg'"></app-icon-text-view>
+                            <app-icon-text-view class="col icon-text-view p-2 text-center align-content-center mb-3" [iconText]="'Cuidamos de ti'" [iconImg]="'assets/images/icons/icon_cuidamos.svg'"></app-icon-text-view>
+                            <app-icon-text-view class="col icon-text-view p-2 text-center align-content-center mb-3" [iconText]="'Lo hacemos fácil'" [iconImg]="'assets/images/icons/icon_facil.svg'"></app-icon-text-view>
+                            <app-icon-text-view class="col icon-text-view p-2 text-center align-content-center mb-3" [iconText]="'Servicio a domicilio'" [iconImg]="'assets/images/icons/icon_domicilio.svg'"></app-icon-text-view>
+                            <app-icon-text-view class="col icon-text-view p-2 text-center align-content-center mb-3" [iconText]="'Soluciones a tu medida'" [iconImg]="'assets/images/icons/icon_soluciones.svg'"></app-icon-text-view>
+                            
+                        </ng-container>                                                                        
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <h3 class="mb-3 text-center" style="font-weight: 400;">Promociones</h3>
+            <app-promociones [title]="false" [description]="false"></app-promociones>
+
+        </div>
+    </div>
+   
+</div>

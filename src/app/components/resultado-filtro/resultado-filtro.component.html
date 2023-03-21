@@ -1,0 +1,170 @@
+<div class="row">
+    <div class="col-md-12 bg-gris text-left p-4 text-white" >
+        <div class="row m-0">
+            <div class="col-xl-4 col-sm-12">
+
+                <div class="row m-0">
+                    
+                    <div class="col-12 col-xl-6">
+
+                <mat-form-field class="example-full-width" appearance="fill" style="width: 100%;">
+                    <mat-label>Fecha de Renta</mat-label>
+                   <mat-date-range-input
+                      [formGroup]="campaignOne"
+                      [rangePicker]="campaignOnePicker"
+                      [min]="minDate"
+                      [dateFilter]="myFilter"
+                    >
+                      <input #fechaInit matStartDate placeholder="Fecha Inicio" formControlName="start" >
+                      <input #fechaEnt matEndDate placeholder="Fecha Entrega" formControlName="end" (dateChange)="dateRangeChange(fechaInit, fechaEnt, hora)">
+                    </mat-date-range-input>
+                    <mat-datepicker-toggle matSuffix [for]="campaignOnePicker"></mat-datepicker-toggle>
+                    <mat-date-range-picker touchUi #campaignOnePicker></mat-date-range-picker>
+                </mat-form-field>
+           
+
+                 
+                </div>
+             
+                    <div class="col-12 col-xl-6">
+                        <mat-form-field class="example-full-width" appearance="fill"  style="width: 100%;color:#fff;" >
+                            <mat-label>Hora</mat-label>
+                            <mat-select #hora [(value)]="horarios[0].value" (selectionChange)="dateRangeChange(fechaInit, fechaEnt, hora)">
+                              <mat-option *ngFor="let horario of horarios" [value]="horario.value">
+                                {{horario.viewValue}}
+                              </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                  </div>
+               
+                </div>
+                <div class="col-12 col-xl-10 justify-content-center mt-4">
+                    <div class="boton boton-primario" (click)="onFilterCategory()">Buscar</div>
+                </div>
+          
+                  <br/>
+
+                
+            </div>
+            <div class="col-xl-4 col-sm-12">
+                <span><strong>Filtro tipo de auto</strong></span>
+                <div class="row text-center justify-content-center align-self-center mt-2">
+                   
+                    <div *ngFor="let car of sltCarList; let i = index;" [class]="car.id !== 30 &&
+                    car.id !== 10 &&
+                    car.id !== 13 &&
+                    car.id !== 12 &&
+                    car.id !== 16 && car.id != 0 ? 'justify-content-center align-self-center p-1 col-3 col-sm-3 col-md-3 col-xl-3' : 'd-none'">
+                                           
+                        <div (click)="onAddingCar(i)">
+                    
+                            <img *ngIf="car.checked == true" class="m-0" width="80em" [src]="car.select" [alt]="car.type"/>
+                            <img *ngIf="car.checked == false" class="m-0" width="80em" [src]="car.img" [alt]="car.type"/>
+
+                        </div>                                                                                                                                                                                    
+                    </div>                                     
+                </div>     
+            </div>
+            <div class="col-12 col-xl-4 col-sm-12">
+                <span><strong>Licencia de conducir</strong></span>
+                <div class="row text-center">
+                    <div class="col-6 p-1 justify-content-center align-self-center">
+                        <div [class]="sltLicenseNl == true ? 'pl-0 bg-btn-auto m-1 p-2 active': 'pl-0 bg-btn-auto m-1 p-2'" (click)="onAddingLicenseNl()">
+                            <img *ngIf="this.sltLicenseNl" style="position: absolute; left: 20px;" width="20px" src="assets/images/icons/ok.svg" alt="ok" class="m-auto"/>
+                            <div *ngIf="!this.sltLicenseNl" alt="ok" class="check-square"></div>
+                            <label class="form-check-label pl-2">Monterrey y Área Metropolitana</label>
+                        </div>
+                    </div>
+                    <div class="col-6 p-1 justify-content-center align-self-center">
+                        <div [class]="sltLicenseFo == true ? 'pl-0 bg-btn-auto m-1 p-2 active': 'pl-0 bg-btn-auto m-1 p-2'" (click)="onAddingLicenseFo()">
+                            <img *ngIf="this.sltLicenseFo" style="position: absolute; left: 20px;" width="20px" src="assets/images/icons/ok.svg" alt="ok" class="m-auto"/>
+                            <div *ngIf="!this.sltLicenseFo" alt="ok" class="check-square"></div>
+                            <label class="form-check-label pl-2">Foráneo</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          
+        </div>
+    </div>
+</div>
+
+
+<div *ngIf="isLoaded" class="container d-flex w-100 h-100 justify-content-center align-self-center mt-5">
+    <div class="spinner-border text-primary" role="status">
+      <span class="sr-only">Cargando datos...</span>
+    </div>
+  </div>
+  <div *ngIf="!error" class="row m-3">
+    <div [style.display]="sltCarList[1]['checked']== 0 ? 'none': 'block'">
+        <div id="NoEco" [style.display]="itemsTipos.indexOf('Economicos')>= 0 ? 'none': 'block'">No se encontraron resultados de unidades Económicos para la fecha seleccionada</div>
+    </div>
+    <div [style.display]="sltCarList[2]['checked']== 0&&sltCarList[9]['checked']== 0 ? 'none': 'block'">
+        <div id="NoSed" [style.display]="itemsTipos.indexOf('Sedanes')>= 0 ? 'none': 'block'">No se encontraron resultados de unidades Sedanes para la fecha seleccionada</div>
+    </div>
+    <div [style.display]="sltCarList[3]['checked']== 0&&sltCarList[4]['checked']== 0&&sltCarList[6]['checked']== 0 ? 'none': 'block'">
+        <div id="NoPas" [style.display]="itemsTipos.indexOf('Pasajeros')>= 0 ? 'none': 'block'">No se encontraron resultados de unidades Pasajeros para la fecha seleccionada</div>
+    </div>
+    <div [style.display]="sltCarList[5]['checked']== 0&&sltCarList[7]['checked']== 0&&sltCarList[8]['checked']== 0 ? 'none': 'block'">
+        <div id="NoCarga" [style.display]="itemsTipos.indexOf('Carga')>= 0 ? 'none': 'block'">No se encontraron resultados de unidades Carga para la fecha seleccionada</div>
+    </div>
+  </div>
+<div *ngIf="!error" class="row m-3">
+    
+    <div *ngFor="let auto of items" class="col-xl-4 col-lg-6 col-md-6 col-sm-12 col-xs-12 col-12 mb-3" [style.display]="auto.activo === true ? 'block': 'none'">
+        <div class="card p-0 h-100">
+            <div class="card-body p-2">
+                <div class="row">
+                    <div class="col-12">
+                        <b>{{auto.detail.car ? auto.detail.car.model.name : null}}</b>
+                    </div>
+                    <div class="col-xl-6 col-lg-12 col-md-12 col-6">
+                        <p class="m-1 px-2">
+                            <small><b>{{auto.detail.car ? auto.detail.category.name : null}}</b></small>
+                        </p>
+                        <div class="align-self-center text-center">
+                            <img class="m-auto img-fluid" [src]="auto.detail.car ? auto.detail.car.model.imagePath : null" [alt]="auto.detail.car ? auto.detail.car.model.description : null"/>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-12 col-md-12 col-6">
+                        <div class="row">              
+                            <div class="col-7 m-0 p-1">
+                                <img height="20px" src="assets/images/icons/icons-catalogo/ico_pasajeros.svg" alt="pasajeros"/>
+                                <span class="m-3"> {{auto.detail.car ? auto.detail.car.model.passengers : null}} {{" "}}pasajeros</span>
+                            </div >
+                            <div class="col-5 m-0 p-1">
+                                <img height="20px" src="assets/images/icons/icons-catalogo/ico_clima.svg" alt="clima"/>
+                                <span class="m-2"> {{auto.detail.car ? auto.detail.car.model.airConditioner : null}}</span>
+                            </div>
+                            <div class="col-7 m-0 p-1">
+                                <img height="20px" src="assets/images/icons/icons-catalogo/ico_maletas.svg" alt="maletas"/>
+                                <span class="m-2"> {{auto.detail.car ? auto.detail.car.model.bigLuggage : null}} {{" "}}maletas</span>
+                            </div>
+                            <div class="col-5 m-0 p-1">
+                                <img height="20px" src="assets/images/icons/icons-catalogo/ico_bolsas_aire.svg" alt="bolsas-aire"/>
+                                <span class="m-2">{{" "}}{{" "}}Si</span>
+                            </div>
+                            <div class="col-7 m-0 p-1">
+                                <img height="20px" src="assets/images/icons/icons-catalogo/ico_transmision.svg" alt="transmision"/>
+                                <span class="m-3">{{"  "}}{{auto.detail.car ? auto.detail.car.model.gearbox : null}} {{" "}}</span>
+                            </div>
+                            <div class="col-5 m-0 p-1" hidden>
+                                <img height="20px" src="assets/images/icons/icons-catalogo/ico_rendimiento.svg" alt="rendimiento"/>
+                                <span class="mt-3"> 100LT</span>
+                            </div>                                                 
+                        </div>
+                        <p class="m-0 mb-2" style="font-size: 0.8rem">Desde <b><span class="text-primary">${{auto.detail.car ? auto.detail.priceItems[0].unitPrice : null}}.00</span></b> MXN por día.</p>
+                        <a class="btn btn-primary btn-block" [routerLink]="['/envia-tu-reserva', this.fechaInicio, this.fechaEntrega, auto.detail.car.model.id, this.license]">¡Reserva Ahora!</a>
+                    </div>
+             
+                    
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+<div *ngIf="error" class="row m-3">
+    <h1>{{error}}</h1>
+</div>

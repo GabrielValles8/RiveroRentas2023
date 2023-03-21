@@ -1,0 +1,175 @@
+<div class="row m-3">
+    <a [routerLink]="[]"></a>
+    <div class="col-md-3">
+        <div class=" m-auto bg-light p-2">
+            <p class="mb-1 text-primary" style="font-size: 2vh;">Resumen</p>
+                <b>{{modelo?modelo.Name:null}}</b>
+                <p class="mb-1"><b class="text-primary" style="font-size: 3vh">${{detalle?numberWithCommas(detalle.Price + segurosTotal + adicionalesTotal):0|number}}<label style="font-size: 1vh;">MXN</label></b></p>
+                <small>Reservar por {{detalle?detalle.TotalDaysString:null}} (${{detalle?numberWithCommas(detalle.AverageDayPrice):0 | number}} x dia): ${{detalle?numberWithCommas(detalle.Price):0 | number}}, con un depósito de ${{detalle?numberWithCommas(detalle.Franchise):0| number}}</small>
+                   
+                <hr/>
+                    <div class="row">
+                        <div class="col-6"><b>Recolección</b>
+                            <p>{{salida.name?salida.name:null}}&nbsp;{{quitarNulos(from)}}</p>
+                        </div>
+                        <div class="col-6"><b>Devolución</b>
+                            <p>{{regreso.name?regreso.name:null}}&nbsp;{{quitarNulos(to)}}</p>
+                        </div>
+                    </div>
+                  
+                    <!--<b>Detalles de pago</b>
+                    <p>Reservar por {{detalle?detalle.TotalDaysString:null}} (${{detalle?numberWithCommas(detalle.AverageDayPrice):0 | number}} x dia): ${{detalle?numberWithCommas(detalle.Price):0 | number}}</p>
+                    -->
+                    <p *ngFor="let seguro of seguros; let i=index">
+                        <span *ngIf="seguro.checked"> - {{seguro.detail.name}} por {{detalle.TotalDaysString}}: ${{seguro?numberWithCommas(seguro.detail.dailyPrice * detalle.TotalDays):0 | number}}</span>
+                    </p>
+                    <p *ngIf="this.servicioAeropuerto > 0"> - Servicio aeropuerto: ${{this.servicioAeropuerto | number}}</p>
+                    <p *ngIf="this.conductorAdicional > 0"> - Conductor adicional: ${{this.conductorAdicional | number}}</p>
+                    <!--<p *ngIf="this.servicioDomicilio > 0"> - Servicio a domicilio: ${{this.servicioDomicilio | number}}</p>-->
+
+          <br/>
+                <div class="text-center">
+                    <img [src]="modelo?modelo.ImagePath:null" [alt]="modelo?modelo.Name:null" class="img-fluid mb-1" />
+                </div>
+                
+           
+            <div class="row d-blok mb-2 p-2">
+                <div class="col-12 m-0 p-1">
+                        <p class="my-2" hidden><b>{{categoria?categoria.Name:null}}</b></p>
+                   
+                        <img src="assets/images/icons/icons-catalogo/ico_rendimiento.svg" class="m-0" height="20px" alt="velocimetro" />&nbsp;&nbsp;
+                        <span><b>Kilometraje Ilimitado</b></span>
+                   </div>
+                    <div class="col-4 m-0 p-1">
+                        <img src="assets/images/icons/icons-catalogo/ico_pasajeros.svg" class="m-0" height="20px" alt="pasajeros" />&nbsp;&nbsp;
+                        <span>{{modelo?modelo.Passengers:null}} pasajeros</span>
+                    </div>
+                    <div class="col-4 m-0 p-1">
+                        <img src="assets/images/icons/icons-catalogo/ico_clima.svg" class="m-0" height="20px" alt="clima" />&nbsp;&nbsp;
+                        <span>{{modelo?modelo.AirConditioner:null}}</span>
+                    </div>
+                    <div class="col-4 m-0 p-1">
+                        <img src="assets/images/icons/icons-catalogo/ico_maletas.svg" class="m-0" height="20px" alt="maletas" />&nbsp;&nbsp;
+                        <span>{{modelo?modelo.BigLuggage + modelo.SmallLuggage:0}} maletas</span>
+                    </div>
+                    <div class="col-4 m-0 p-1">
+                        <img src="assets/images/icons/icons-catalogo/ico_bolsas_aire.svg" class="m-0" height="20px" alt="bolsas" />&nbsp;&nbsp;
+                        <span>SI</span>
+                    </div>
+                    <div class="col-4 m-0 p-1">
+                        <img src="assets/images/icons/icons-catalogo/ico_transmision.svg" class="m-0" height="20px" alt="transmision" />&nbsp;&nbsp;
+                        <span>{{modelo?modelo.Gearbox:null}}</span>
+                    </div>
+                    <div class="col-4 m-0 p-1" hidden>
+                        <img src="assets/images/icons/icons-catalogo/ico_rendimiento.svg" class="m-0" height="20px" alt="combustible" />&nbsp;&nbsp;
+                        <span class="mt-3">100LT</span>
+                    </div> 
+               
+            </div>
+        </div>
+    </div>
+    <div class="col-md-9">
+        <div class="row mb-3">
+            <div class="col-xl-6 col-md-12 col-xs-12 col-12">
+                <p class="mb-1 text-primary" style="font-size: 2vh;">¡Excelente elección!,que nada te haga falta...</p>
+                <p>Te muestro opciones que pueden interesarte para tu viaje</p>
+                <p class="m-3"><b>Seguros</b></p>
+                <div class="bg-light p-2 col-12">
+                    <div *ngFor="let seguro of seguros; let i=index" class="row mt-3 mx-3 mb-1 align-items-center" (click)="onAddingSeguros(i)">
+                        <div class="col-9 px-1">
+                            {{seguro.detail.name}}<br/> <b>${{seguro.detail.dailyPrice}} p/dia</b>
+                        </div>
+                        <div class="text-center px-1 col-3">
+                            <div class="btn-block border border-dark rounded text-center btn p-0" style="width: 100px;">
+                              
+                                    <img *ngIf="seguro.checked == true;" width="20px" src="assets/images/icons/ok.svg" alt="ok" class="m-auto" />
+                            
+                                    <div *ngIf="seguro.checked == false;" class="rounded-circle bg-beige-1 ml-2 mt-1" style="float: left; width: 20px; height: 20px;"><span>&nbsp;</span></div>
+                                    
+
+                                <img width="40px" src="assets/images/icons/btn_seguro.svg" alt="imagen-icono-deducible" class="m-auto" />
+                            </div>
+                        </div>
+               
+                       <div class="col-12"><hr/></div>
+                        
+                     
+                    </div>
+                </div>
+                <p class="m-3"><b>Adicionales</b></p>
+                <div class="bg-light col-12">
+                    
+                    <div *ngFor="let adicional of adicionales; let i=index" class="row mt-3 mx-3 mb-1 align-items-center">
+                        <div class="px-1 col-9">
+                            {{adicional.detail.name}}<br/><b>${{adicional.detail.dailyPrice}} p/reserva</b>
+                        </div>
+                        <div class="text-center px-1 col-3">
+                            <div class="btn-block border border-dark rounded text-center btn p-0" style="width: 100px;" (click)="onAddingAdicionales(i)">
+                                
+                                <img *ngIf="adicional.checked == true" width="20px" src="assets/images/icons/ok.svg" alt="ok" class="mx-auto" />
+                               
+                                <div *ngIf="adicional.checked == false" class="rounded-circle bg-beige-1 ml-2 mt-1" style="float: left; width: 20px; height: 20px;"><span>&nbsp;</span></div>
+                                    
+                               
+                                <img width="40px" [src]="adicional.detail.imagePath" alt="imagen-icono-deducible" class="m-auto" />
+                            </div>
+                        </div>
+                        <div class="col-12"><hr/></div>
+                      
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-12 col-xs-12 col-12 mx-auto">
+                <h3>Realiza tu reserva aquí</h3><br/>
+                <form>
+                    <div class="form-group">
+                        <input #nombreI type="text" class="form-control" placeholder="Nombre" (change)=" nombre = nombreI.value">
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <input #correoI type="text" class="form-control" placeholder="Correo" (change)="correo = correoI.value">
+                        </div>
+                        <div class="col">
+                            <input #telefonoI type="text" class="form-control" placeholder="Telefono" (change)="telefono = telefonoI.value" maxlength="10">
+                        </div>
+                    </div>
+                    <!--div class="form-check"><br>
+                        <input type="checkbox" class="form-check-input" (change)="setCondiciones()"/>
+                        <label>* Leí y acepto las condiciones de compra y políticas de privacidad.</label>
+                    </div-->
+                </form>
+                <!--div class="row mb-3 bg-light">
+                    <div class="col-12">
+                        <p class="m-3"><b>Método de pago</b></p>
+                    </div>
+                
+                        <div class="col-12 col-md-6 col-sm-6 text-center" *ngIf="licencia !='foraneo'">
+                            <div  class="btn-block btn-lg border border-dark rounded text-center btn px-0 mb-2" style="float: left; font-size: 12px;" (click)="cambiarPago('efectivo')">
+                                <input #tipoPagoI type="radio" name="metodoPago" value="efectivo" id="efectivo" (click)="tipoPago = tipoPagoI.value"/>
+                                <img class="m-auto" src="assets/images/icons/efectivo.svg" alt="efectivo" width="30px"/>
+                                <span> Efectivo/Transferencia</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-12 text-center">
+                            <div  class="btn btn-block btn-lg border border-dark rounded text-center px-0 mb-2" style="float: left; font-size: 12px;" (click)="cambiarPago('tarjeta')">
+                                <input #tipoPagoI type="radio" name="metodoPago" value="tarjeta" id="tarjeta" (click)="tipoPago = tipoPagoI.value"/>
+                                <img class="m-auto" src="assets/images/icons/tarjeta.svg" alt="tarjeta" width="70px"/>
+                                <span> Tarjeta crédito/débito</span>
+                            </div>
+                        </div>
+                 
+                </div-->
+                <div class="row">
+                    <div class="col-12 text-center"><br>
+                        <!--div *ngIf="!this.loadedSpiner" class="btn btn-primary" (click)="reservar(detalle.Price + this.segurosTotal + this.adicionalesTotal)">Enviar</div-->
+                        <div *ngIf="!this.loadedSpiner" class="btn btn-primary" (click)="reservarCorreo()">Enviar</div>
+                        <!--div *ngIf="this.loadedSpiner" class="spinner-border text-primary" role="status">
+                            <span class="sr-only">Cargando datos...</span>
+                        </div-->
+                    </div>
+                </div>
+            </div>         
+        </div>
+    </div>
+   
+</div>

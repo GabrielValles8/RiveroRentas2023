@@ -1,0 +1,162 @@
+
+    <div [style.height]="'300px'" [style.display]="filter == 0 ? 'block' : 'none'">
+        <h1 style="position:absolute;left:10%;top:20px;font-size:2em" hidden>Tu renta fácil y rápido</h1>
+        <div class="row" style="position:absolute;width:100%;bottom:0px">
+            <div class="align-self-center col-md-2 mb-2">
+                
+            </div>
+            <div class="align-self-center col-md-4 mb-2">
+                <div class="boton boton-home p-2" (click)="filter = 1">
+                    <img width="100em" src="assets/images/icons/auto.svg" alt="icon-economico"><br><strong> Renta<br/>(Día / Semana / Mes)</strong>
+                </div>
+            </div>
+            <!--<div class="align-self-center col-md-4 mb-2">
+                <a [routerLink]="['/nuestras-unidades']" class="text-white"><div class="boton boton-home p-2">
+                    <img width="100em" src="assets/images/icons/auto.svg" alt="icon-economico"><br><strong><br>Ver Inventario</strong>
+                </div></a>
+            </div>-->
+            <div class="align-self-center col-md-4 mb-2">
+                <a [routerLink]="['/empresarial']">
+                    <div class="boton p-2 boton-flotillas text-white">
+                        <img width="150em" src="assets/images/icons/flotillas.svg" alt="icon-economico"><br><strong> Renta<br>(Flotillas / Precio Especial)</strong>
+                    </div>
+                </a>
+            </div>
+            <div class="align-self-center col-md-2 mb-2">
+                
+            </div>
+       
+       
+        </div>
+    </div>
+    <div [style.display]="filter == 1 ? 'block' : 'none'" class="bg-secondary">
+            <div class="bg-gris-1 text-left pt-3 px-3 text-white bg-gris-1 col-xl-12 col-md-12">
+                <div class="row">
+                <div class="col-12 col-xl-6">
+                    <mat-form-field class="example-full-width" appearance="fill" style="width: 100%;">
+                        <mat-label>Fecha de Renta</mat-label>
+                    <mat-date-range-input
+                        [formGroup]="campaignOne"
+                        [rangePicker]="campaignOnePicker"
+                        [min]="minDate"
+                        [dateFilter]="myFilter"
+                        >
+                        <input #fechaInit matStartDate placeholder="Fecha Inicio" formControlName="start" >
+                        <input #fechaEnt matEndDate placeholder="Fecha Entrega" formControlName="end" (dateChange)="dateRangeChange(fechaInit, fechaEnt, hora)">
+                        </mat-date-range-input>
+                        <mat-datepicker-toggle matSuffix [for]="campaignOnePicker"></mat-datepicker-toggle>
+                        <mat-date-range-picker touchUi #campaignOnePicker></mat-date-range-picker>
+                    </mat-form-field>
+       
+                </div>
+             
+         
+         
+                <div class="col-12 col-xl-6">
+                    <mat-form-field class="example-full-width" appearance="fill"  style="width: 100%;color:#fff;" >
+                        <mat-label>Hora</mat-label>
+                        <mat-select #hora [(value)]="horarios[0].value" (selectionChange)="dateRangeChange(fechaInit, fechaEnt, hora)">
+                          <mat-option *ngFor="let horario of horarios" [value]="horario.value">
+                            {{horario.viewValue}}
+                          </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+              </div>
+            </div>
+           
+           
+ 
+
+<!--
+            <p class="mb-1"><strong>1-Fecha</strong></p>
+            <div class="m-0 row">
+                <div class="col-6 pr-0 col-md-6 col-sm-6"><span>Inicio</span>
+                    <div class="m-0 mb-2 row">
+                        <div class="p-0 col-xl-12 col-md-12">
+                            <mat-form-field>
+                                <input #fechaInit matInput [min]="minFechaInicio" [ngxMatDatetimePickerFilter]="myFilter" [ngxMatDatetimePicker]="picker" 
+                                   [disabled]="false" [formControl]="fromDate" (ngModelChange)="setInicio(fechaInit.value)">
+                                <mat-datepicker-toggle matSuffix [for]="$any(picker)"></mat-datepicker-toggle>
+                                <ngx-mat-datetime-picker #picker [showSpinners]="true" [showSeconds]="false" color="primary"
+                                  [enableMeridian]="false" [disableMinute]="false" [(ngModel)]="fecha">
+                            
+                                  <ng-template>
+                                  
+                                    <span>OK</span>
+                                  </ng-template>
+                                </ngx-mat-datetime-picker>
+                              </mat-form-field>
+                        </div>                       
+                    </div>
+                </div>
+                <div class="col-6 pr-0 col-xl-6 col-sm-6"><span>Entrega</span>
+                    <div class="m-0 mb-2 row">
+                        <div class="p-0 col-xl-12 col-md-12">
+                            <mat-form-field>
+                                <input #fechaEnt matInput [min]="minFechaInicio" [ngxMatDatetimePickerFilter]="myFilter" [ngxMatDatetimePicker]="picker2" 
+                                   [disabled]="false" [formControl]="toDate" (ngModelChange)="setEntrega(fechaEnt.value)">
+                                <mat-datepicker-toggle matSuffix [for]="$any(picker2)"></mat-datepicker-toggle>
+                                <ngx-mat-datetime-picker #picker2 [showSpinners]="true" [showSeconds]="false" color="primary"
+                                  [enableMeridian]="false" [disableMinute]="false">
+                                
+                                  <ng-template>
+                                  
+                                    <span>OK</span>
+                                  </ng-template>
+                                </ngx-mat-datetime-picker>
+                              </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        -->
+            <div class="row">
+                <div class="col-xl-12 col-sm-12"><span><strong>2- Tipo de auto</strong></span>
+                    <div class="pl-3 pr-3">
+                        <div class="text-center row">
+                            <div *ngFor="let car of sltCarList; let i = index;" class="justify-content-center align-self-center p-1 col-6 col-md-3 col-sm-3 col">
+                                <div (click)="onAddingCar(i)" [class]="car.isChecked == true ? 'active': ''">
+                                    <img *ngIf="car.isChecked == true" class="m-0" width="100em"
+                                        [src]="car.select"
+                                        [alt]="car.type">
+                                    <img *ngIf="car.isChecked == false" class="m-0" width="100em"
+                                        [src]="car.img"
+                                        [alt]="car.type"><br>
+                                </div>
+                            </div>                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-12 col-sm-12"><span><strong>3- Licencia de conducir</strong></span>
+                    <div class="pl-3 pr-3">
+                        <div class="text-center row">
+                            <div class="justify-content-center align-self-center p-1 col-6 col-sm-6">
+                                <div [class]="sltLicenseNl == true ? 'pl-0 bg-btn-auto m-1 p-2 active': 'pl-0 bg-btn-auto m-1 p-2'" (click)="onAddingLicenseNl()">
+                                    <img *ngIf="sltLicenseNl == true" style="position: absolute; left: '20px';" width="20" src="assets/images/icons/ok.svg" class="m-auto">
+                                    <div *ngIf="sltLicenseNl == false" class="check-square"></div>
+                                    <label
+                                        class="form-check-label pl-2">Monterrey y Área Metropolitana</label>
+                                </div>
+                            </div>
+                            
+                            <div class="justify-content-center align-self-center p-1 col-6 col-sm-6">
+                                <div [class]="sltLicenseFo == true ? 'pl-0 bg-btn-auto m-1 p-2 active': 'pl-0 bg-btn-auto m-1 p-2'" (click)="onAddingLicenseFo()">
+                                    <img *ngIf="sltLicenseFo == true" style="position: absolute; left: '20px';" width="20" src="assets/images/icons/ok.svg" class="m-auto">
+                                    <div *ngIf="sltLicenseFo == false" class="check-square"></div>
+                                    <label
+                                        class="form-check-label pl-2">Foráneo</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div style="clear:both"></div> <br><br>
+                <div class="text-center justify-content-center mt-2 mb-2 col-12 col"><br><a class="boton boton-amarillo btn-lg p-3" [routerLink]="['/resultado-filtro', fechaInicio, fechaEntrega, sltCarList[0]['isChecked'], sltCarList[1]['isChecked'], sltCarList[2]['isChecked'], sltCarList[3]['isChecked'], license]"><span style="font-weight:600;font-size:1em">¡Reserva Ya!</span></a></div>
+            </div>
+        </div><a href="/" class="btn btn-secondary btn-lg"><span
+                style="font-weight:600;font-size:1em;position:absolute;left:20px;bottom:20px">Regresar</span></a>
+    </div>

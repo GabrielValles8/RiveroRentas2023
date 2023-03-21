@@ -1,0 +1,40 @@
+
+
+
+<div class="row my-3">
+  <div *ngIf="isLoaded" class="col-12 justify-content-center text-center">
+    <div class="container d-flex w-100 h-100 justify-content-center align-self-center mt-5">
+      <div class="spinner-border text-primary text-center" role="status">
+        <span class="sr-only">Cargando datos...</span>
+      </div>
+    </div>
+  </div>
+  
+    <div class="col-12 col-lg-6 col-md-6 col-sm-12 mb-4 bg-light" *ngFor="let promocion of promociones; let i=index" (click)="showModal({titulo:promocion.Name, descripcion:promocion.Description, imagen:promocion.ImagePath})">
+        <img [src]="promocion.ImagePath" [alt]="promocion.Name" class="img-fluid" style="cursor: pointer;"/>
+        <h4 class="px-2 pt-3" *ngIf="title == true">{{promocion.Name}}</h4>
+        <p class="px-2" *ngIf="description == true">{{promocion.Description}}</p>
+
+    </div>
+</div>
+
+<div class="modal" tabindex="-1" [style.display]="showForm ? 'block': 'none'" aria-labelledby="exampleModalLabel" aria-hidden="true" style="background: rgba(0, 0, 0, 0.5);">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">{{tituloPop}}</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="hideModal()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <img [src]="imagenPop" [alt]="tituloPop" class="img-fluid"/>
+            <p >{{descripionPop}}</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="hideModal()">Cerrar</button>
+          
+        </div>
+      </div>
+    </div>
+  </div>

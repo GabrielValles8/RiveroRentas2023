@@ -1,0 +1,21 @@
+<form>
+    <div class="form-row">
+        <div class="form-group col-12">
+            <input #clienteI class="form-control" type="text" placeholder="Nombre y apellidos" (change)="cliente = clienteI.value" />
+        </div>
+        <div class="form-group col-6">
+            <input #correoI class="form-control" type="email" placeholder="Correo" (change)="correo = correoI.value"/>
+        </div>
+        <div class="form-group col-6">
+            <input #telefonoI class="form-control" type="textr" placeholder="Teléfono" (change)="telefono = telefonoI.value"/>
+        </div>
+        <div class="form-group col-12">
+            <textarea #comentariosI class="form-control" placeholder="Deja tu mensaje (opcional)" rows="5" (change)="comentarios = comentariosI.value"></textarea>
+        </div>
+    </div>
+</form>
+<div class="row justify-content-center">
+    <div class="col-5">
+        <div class="boton boton-primario text-center" (click)="sendContactNuevo()">Enviar</div>
+    </div>
+</div>

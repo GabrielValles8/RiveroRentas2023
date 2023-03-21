@@ -1,0 +1,73 @@
+
+
+
+
+
+<div class="row m-3">
+    <a href="/" class="text-dark">Inicio/</a><strong>Contacto</strong><br><br>
+    
+</div>
+<h1 class="text-center">Renta de unidades a mediano y largo plazo</h1>
+<div *ngIf="isLoaded" class="container d-flex w-100 h-100 justify-content-center align-self-center mt-5">
+    <div class="spinner-border text-primary" role="status">
+      <span class="sr-only">Cargando datos...</span>
+    </div>
+  </div>
+<div *ngIf="!isLoaded" class="row m-3">
+    <div *ngFor="let auto of unidades" class="col-xl-4 col-lg-6 col-md-6 col-sm-12 col-xs-12 col-12 mb-3">
+        <div class="card p-0 h-100">
+            <div class="card-body p-2">
+                <div class="row">
+                    <div class="col-12">
+                        <b>{{auto ? auto.Name : null}}</b>
+                    </div>
+                    <div class="col-xl-6 col-lg-12 col-md-12 col-6">
+                        <p class="m-1 px-2">
+                            <small><b>{{auto ? auto.Category.Name : null}}</b></small>
+                        </p>
+                        <div class="align-self-center text-center">
+                            <img class="m-auto img-fluid" width="100%" [src]="auto ? auto.ImagePath : null" [alt]="auto ? auto.Description : null" [alt]="auto.Category.Name"/>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-12 col-md-12 col-6 align-self-center">
+                        <div class="row">              
+                            <div class="col-7 m-0 p-1">
+                                <img height="20px" src="assets/images/icons/icons-catalogo/ico_pasajeros.svg" alt="pasajeros"/>
+                                <span> {{auto ? auto.Passengers : null}} {{" "}}pasajeros</span>
+                            </div>
+                            <div class="col-5 m-0 p-1">
+                                <img height="20px" src="assets/images/icons/icons-catalogo/ico_clima.svg" alt="clima"/>
+                                <span> {{auto ? auto.AirConditioner : null}}</span>
+                            </div>
+                            <div class="col-7 m-0 p-1">
+                                <img height="20px" src="assets/images/icons/icons-catalogo/ico_maletas.svg" alt="maletas"/>
+                                <span> {{auto ? auto.BigLuggage : null}} {{" "}}maletas</span>
+                            </div>
+                            <div class="col-5 m-0 p-1">
+                                <img height="20px" src="assets/images/icons/icons-catalogo/ico_bolsas_aire.svg" alt="bolsas-aire"/>
+                                <span> Si</span>
+                            </div>
+                            <div class="col-7 m-0 p-1">
+                                <img height="20px" src="assets/images/icons/icons-catalogo/ico_transmision.svg" alt="transmision"/>
+                                <span>{{auto ? auto.Gearbox : null}} {{" "}}</span>
+                            </div>
+                            <div class="col-5 m-0 p-1" hidden>
+                                <img height="20px" src="assets/images/icons/icons-catalogo/ico_rendimiento.svg" alt="rendimiento"/>
+                                <span class="mt-3"> 100LT</span>
+                            </div>                                                 
+                        </div>
+                        <p class="m-0 mb-2" style="font-size: 0.8rem">Desde <b><span class="text-primary">${{auto ? auto.DailyPrice : null}}.00</span></b> MXN por día.</p>
+                        <!--<a class="btn btn-primary btn-block" [routerLink]="['/resultado-filtro', fechaInicio + ' 11:00' , fechaEntrega + ' 11:00', 'true', 'false', 'false', 'false', 'local']">¡Reserva Ahora!</a>-->
+                    </div>
+                    
+                    
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+<div *ngIf="error" class="row m-3">
+    <h1>{{error}}</h1>
+</div>
